@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>Apurvaa · 12.10.2026 — An Editorial Archival</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    * { -ms-overflow-style: none; scrollbar-width: none; }
+    .magnetic-cursor {
+      pointer-events: none;
+      will-change: transform;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .sound-bar {
+      animation: soundWave 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes soundWave {
+      0% { height: 3px; }
+      50% { height: 13px; }
+      100% { height: 5px; }
+    }
+    .sound-bar:nth-child(2) { animation-delay: 0.2s; }
+    .sound-bar:nth-child(3) { animation-delay: 0.4s; }
+    .sound-bar:nth-child(4) { animation-delay: 0.1s; }
+    .sound-bar.paused { animation-play-state: paused; height: 3px; }
+
+    @keyframes slowZoom {
+      0% { transform: scale(1.0); }
+      100% { transform: scale(1.08); }
+    }
+    .animate-slow-zoom {
+      animation: slowZoom 24s ease-out infinite alternate;
+    }
+    .video-player-shell {
+      width: min(100%, 56rem, calc(82vh * var(--video-ratio, 1.7778)));
+      margin-inline: auto;
+    }
+    .video-player-shell[data-orientation="portrait"] {
+      width: min(100%, 32rem, calc(82vh * var(--video-ratio, 0.5625)));
+    }
+    .video-frame {
+      width: 100%;
+      aspect-ratio: var(--video-ratio, 16 / 9);
+      max-height: 82vh;
+    }
+    .video-frame video {
+      object-fit: contain;
+    }
+    .video-frame .video-shade {
+      transition: opacity 300ms ease;
+    }
+    .video-frame.is-playing .video-shade {
+      opacity: 0;
+      pointer-events: none;
+    }
+    main section[id] { scroll-margin-top: 6rem; }
+    @media (max-width: 1151px) {
+      header .desktop-navigation { display: none; }
+    }
+    @media (max-width: 767px) {
+      #finale {
+        min-height: 100svh;
+        height: auto;
+        justify-content: flex-start;
+        gap: 1.25rem;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+      }
+      #finale .finale-media {
+        position: relative;
+        inset: auto;
+        order: 2;
+        width: 100%;
+        aspect-ratio: 1150 / 720;
+      }
+      #finale .finale-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      #finale .finale-metadata { order: 1; padding-top: 3rem; }
+      #finale .finale-copy { order: 3; padding-block: 0; }
+      #finale .finale-catalog { order: 4; margin-top: auto; }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#3b171f",
+            "primary-container": "#542c34",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#ca939c",
+            "primary-fixed": "#ffd9de",
+            "primary-fixed-dim": "#f2b7c0",
+            "secondary": "#864e57",
+            "secondary-container": "#feb6c0",
+            "secondary-fixed": "#ffd9dd",
+            "secondary-fixed-dim": "#fbb4bd",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#7a454d",
+            "tertiary": "#2e200f",
+            "tertiary-container": "#453522",
+            "tertiary-fixed": "#f9dec3",
+            "tertiary-fixed-dim": "#dbc2a8",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#b59d85",
+            "surface": "#fdf9f4",
+            "surface-dim": "#ddd9d5",
+            "surface-bright": "#fdf9f4",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f7f3ee",
+            "surface-container": "#f1ede8",
+            "surface-container-high": "#ebe8e3",
+            "surface-container-highest": "#e6e2dd",
+            "surface-variant": "#e6e2dd",
+            "outline": "#837375",
+            "outline-variant": "#d5c2c4",
+            "inverse-surface": "#201c1d",
+            "inverse-on-surface": "#f4f0eb",
+            "background": "#fdf9f4",
+            "on-background": "#1c1c19",
+            "on-surface": "#1c1c19",
+            "on-surface-variant": "#504445"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-mobile": "1rem",
+            "space-xs": "0.375rem",
+            "space-sm": "0.75rem",
+            "space-md": "1.5rem",
+            "space-lg": "2.5rem",
+            "space-xl": "4.5rem",
+            "margin-mobile": "1.5rem",
+            "margin": "4rem"
+          },
+          "fontFamily": {
+            "display-xl": ["Playfair Display", "serif"],
+            "display-lg": ["Playfair Display", "serif"],
+            "headline-italic": ["Playfair Display", "serif"],
+            "headline-sm": ["Playfair Display", "serif"],
+            "body-lg": ["Manrope", "sans-serif"],
+            "body-md": ["Manrope", "sans-serif"],
+            "body-sm": ["Manrope", "sans-serif"],
+            "label-uppercase": ["Manrope", "sans-serif"],
+            "label-caps-sub": ["Manrope", "sans-serif"]
+          },
+          "fontSize": {
+            "display-xl": ["84px", { "lineHeight": "92px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-italic": ["36px", { "lineHeight": "46px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-sm": ["24px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "body-lg": ["18px", { "lineHeight": "30px", "letterSpacing": "0.01em", "fontWeight": "300" }],
+            "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "label-uppercase": ["11px", { "lineHeight": "14px", "letterSpacing": "0.18em", "fontWeight": "600" }],
+            "label-caps-sub": ["9px", { "lineHeight": "12px", "letterSpacing": "0.24em", "fontWeight": "600" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-secondary-container selection:text-primary min-h-screen relative overflow-x-hidden">
+<!-- Welcome Overlay — Premium Birthday Surprise Splash Screen -->
+<div id="welcome-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#1a0a0e 0%,#3b171f 35%,#542c34 60%,#2e200f 85%,#1a0a0e 100%);overflow:hidden;transition:opacity 1s cubic-bezier(.4,0,.2,1),visibility 1s;">
+
+  <!-- Floating Balloons -->
+  <div id="balloons-container" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+    <div class="balloon" style="--x:8%;--delay:0s;--dur:7s;--color:#f2b7c0;">🎈</div>
+    <div class="balloon" style="--x:18%;--delay:1.2s;--dur:8s;--color:#fbb4bd;">🎈</div>
+    <div class="balloon" style="--x:30%;--delay:0.5s;--dur:6.5s;--color:#ca939c;">🎈</div>
+    <div class="balloon" style="--x:42%;--delay:2s;--dur:9s;--color:#ffd9de;">🎈</div>
+    <div class="balloon" style="--x:55%;--delay:0.8s;--dur:7.5s;--color:#dbc2a8;">🎈</div>
+    <div class="balloon" style="--x:65%;--delay:1.5s;--dur:6s;--color:#f2b7c0;">🎈</div>
+    <div class="balloon" style="--x:78%;--delay:0.3s;--dur:8.5s;--color:#feb6c0;">🎈</div>
+    <div class="balloon" style="--x:88%;--delay:2.5s;--dur:7s;--color:#ffd9dd;">🎈</div>
+    <div class="balloon" style="--x:50%;--delay:1.8s;--dur:6.8s;--color:#ca939c;">🎈</div>
+    <div class="balloon" style="--x:12%;--delay:3s;--dur:7.2s;--color:#f9dec3;">🎈</div>
+  </div>
+
+  <!-- Sparkle Particles -->
+  <div id="sparkles-container" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+    <div class="sparkle" style="--sx:10%;--sy:20%;--sd:0s;"></div>
+    <div class="sparkle" style="--sx:25%;--sy:60%;--sd:0.8s;"></div>
+    <div class="sparkle" style="--sx:40%;--sy:30%;--sd:1.5s;"></div>
+    <div class="sparkle" style="--sx:60%;--sy:70%;--sd:0.3s;"></div>
+    <div class="sparkle" style="--sx:75%;--sy:15%;--sd:2s;"></div>
+    <div class="sparkle" style="--sx:85%;--sy:50%;--sd:1.2s;"></div>
+    <div class="sparkle" style="--sx:50%;--sy:85%;--sd:0.6s;"></div>
+    <div class="sparkle" style="--sx:35%;--sy:45%;--sd:1.8s;"></div>
+  </div>
+
+  <!-- Soft Glow Effects -->
+  <div style="position:absolute;top:-15%;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(134,78,87,0.3) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-10%;right:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(84,44,52,0.4) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+
+  <!-- Main Content -->
+  <div style="position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:0.75rem;padding:0 1.5rem;text-align:center;">
+
+    <!-- Top Label -->
+    <span style="font-family:'Manrope',sans-serif;font-size:10px;letter-spacing:0.4em;text-transform:uppercase;color:rgba(255,255,255,0.35);">PRIVATE ARCHIVE · A BIRTHDAY MONOGRAPH</span>
+
+    <!-- Decorative Line -->
+    <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(242,183,192,0.5),transparent);margin:0.25rem 0;"></div>
+
+    <!-- Date -->
+    <span style="font-family:'Manrope',sans-serif;font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(242,183,192,0.7);">12 · OCTOBER · 2026</span>
+
+    <!-- Name -->
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(3rem,10vw,6.5rem);color:#fff;letter-spacing:-0.02em;line-height:1;margin:0.5rem 0 0.25rem;text-shadow:0 4px 30px rgba(0,0,0,0.3);">Apurvaa</h1>
+
+    <!-- Subtitle -->
+    <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,3vw,1.5rem);color:rgba(242,183,192,0.85);margin:0;line-height:1.4;">made with a little too much thought ♡</p>
+
+    <!-- Cat Animation -->
+    <div id="welcome-cat" style="margin:1.25rem 0;position:relative;">
+      <span style="font-size:clamp(3rem,8vw,4.5rem);display:block;animation:catBounce 2s ease-in-out infinite;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.4));">🐈‍⬛</span>
+      <span style="font-family:'Manrope',sans-serif;font-size:10px;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase;display:block;margin-top:0.25rem;">meow. it's your day.</span>
+    </div>
+
+    <!-- Open Surprise Button -->
+    <button id="open-surprise-btn" type="button" style="
+      position:relative;
+      margin-top:0.5rem;
+      padding:16px 48px;
+      font-family:'Manrope',sans-serif;
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:0.25em;
+      text-transform:uppercase;
+      color:#3b171f;
+      background:linear-gradient(135deg,#ffd9de 0%,#f2b7c0 50%,#feb6c0 100%);
+      border:none;
+      border-radius:9999px;
+      cursor:pointer;
+      box-shadow:0 8px 32px rgba(242,183,192,0.35),0 2px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.4);
+      transition:all 0.4s cubic-bezier(.16,1,.3,1);
+      animation:btnGlow 2.5s ease-in-out infinite;
+      overflow:hidden;
+    ">
+      <span style="position:relative;z-index:2;">🎁 OPEN YOUR SURPRISE</span>
+    </button>
+
+    <!-- Bottom Hint -->
+    <span style="font-family:'Manrope',sans-serif;font-size:10px;letter-spacing:0.15em;color:rgba(255,255,255,0.25);margin-top:0.75rem;animation:hintPulse 2.5s ease-in-out infinite;">tap the gift to begin ↑</span>
+
+  </div>
+
+  <!-- Splash Screen Styles -->
+  <style>
+    /* Balloon floating animation */
+    .balloon {
+      position: absolute;
+      bottom: -80px;
+      left: var(--x);
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      animation: floatUp var(--dur) ease-in-out infinite;
+      animation-delay: var(--delay);
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+      opacity: 0;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.85; }
+      50%  { transform: translateY(-55vh) rotate(8deg); opacity: 0.9; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) rotate(-5deg); opacity: 0; }
+    }
+
+    /* Sparkle twinkle */
+    .sparkle {
+      position: absolute;
+      left: var(--sx);
+      top: var(--sy);
+      width: 4px;
+      height: 4px;
+      background: #ffd9de;
+      border-radius: 50%;
+      animation: twinkle 2s ease-in-out infinite;
+      animation-delay: var(--sd);
+      box-shadow: 0 0 6px 2px rgba(255,217,222,0.4);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Cat bounce */
+    @keyframes catBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-10px) rotate(-3deg); }
+      50% { transform: translateY(-5px) rotate(0deg); }
+      75% { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    /* Button glow pulse */
+    @keyframes btnGlow {
+      0%, 100% { box-shadow: 0 8px 32px rgba(242,183,192,0.35), 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.4); transform: scale(1); }
+      50% { box-shadow: 0 12px 48px rgba(242,183,192,0.55), 0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.4); transform: scale(1.03); }
+    }
+
+    /* Hint text pulse */
+    @keyframes hintPulse {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Button hover */
+    #open-surprise-btn:hover {
+      transform: scale(1.06) !important;
+      box-shadow: 0 16px 56px rgba(242,183,192,0.6), 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5) !important;
+    }
+    #open-surprise-btn:active {
+      transform: scale(0.97) !important;
+    }
+  </style>
+</div>
+<!-- Interactive Magnetic Cursor -->
+<div class="magnetic-cursor fixed top-0 left-0 w-2 h-2 rounded-full bg-primary pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block" id="cursor-dot"></div>
+<div class="magnetic-cursor fixed top-0 left-0 w-8 h-8 rounded-full border border-secondary pointer-events-none z-[99] transform -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center justify-center" id="cursor-ring">
+<span class="font-label-caps-sub text-[8px] text-primary opacity-0 uppercase tracking-widest transition-opacity duration-300" id="cursor-label"></span>
+</div>
+<!-- Main Site Content Wrapper (Hidden until Open Surprise click) -->
+<div id="main-site-content" style="opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(0.98);">
+<!-- Editorial Top Chrome Navigation -->
+<header class="fixed top-0 left-0 w-full z-50 pointer-events-none">
+<div class="h-20 w-full px-margin-mobile lg:px-margin flex items-center justify-between pointer-events-auto">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps-sub text-label-caps-sub text-on-surface-variant uppercase tracking-[0.28em]">PRIVATE ARCHIVE</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-caps-sub text-label-caps-sub text-primary uppercase tracking-[0.25em]">12.10.2026</span>
+</div>
+<div class="desktop-navigation absolute left-1/2 transform -translate-x-1/2 hidden md:block">
+<nav class="flex items-center gap-1 p-1.5 bg-surface-container-low/85 backdrop-blur-xl rounded-full shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-outline-variant/30">
+<a class="px-3.5 py-1.5 rounded-full font-label-uppercase text-label-uppercase text-on-surface-variant hover:text-primary transition-all duration-200" href="#cover">INDEX</a>
+<a class="px-3.5 py-1.5 rounded-full font-label-uppercase text-label-uppercase text-on-surface-variant hover:text-primary transition-all duration-200" href="#beginning">BEGINNING</a>
+<a class="px-3.5 py-1.5 rounded-full font-label-uppercase text-label-uppercase text-on-surface-variant hover:text-primary transition-all duration-200" href="#chaos">THE CHAOS</a>
+<a class="px-3.5 py-1.5 rounded-full font-label-uppercase text-label-uppercase text-on-surface-variant hover:text-primary transition-all duration-200" href="#memories">MEMORIES</a>
+<a class="px-3.5 py-1.5 rounded-full font-label-uppercase text-label-uppercase text-on-surface-variant hover:text-primary transition-all duration-200" href="#photo-story">THE STORY</a>
+<a class="px-3.5 py-1.5 rounded-full font-label-uppercase text-label-uppercase text-on-surface-variant hover:text-primary transition-all duration-200" href="#letter">THE LETTER</a>
+<a class="px-3.5 py-1.5 rounded-full font-label-uppercase text-label-uppercase text-primary font-bold hover:bg-secondary-fixed transition-all duration-200" href="#reveal">12.10</a>
+</nav>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="hidden flex items-center gap-space-xs bg-surface-container-low/90 backdrop-blur-lg px-space-sm py-2 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-outline-variant/40 group hover:border-secondary transition-all cursor-pointer" id="song-toggle" type="button" aria-label="Play our song" aria-pressed="false">
+<span class="font-label-caps-sub text-label-caps-sub text-secondary group-hover:text-primary transition-colors tracking-widest">OUR SONG</span>
+<div class="flex items-end gap-[2px] h-3 px-1">
+<span class="sound-bar paused w-[2px] bg-secondary rounded-full"></span>
+<span class="sound-bar paused w-[2px] bg-secondary rounded-full"></span>
+<span class="sound-bar paused w-[2px] bg-secondary rounded-full"></span>
+<span class="sound-bar paused w-[2px] bg-secondary rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-secondary group-hover:text-primary transition-colors" id="song-icon">play_arrow</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full">
+<!-- CHAPTER 01 — THE COVER (PHOTO 01: IMAGE_7) -->
+<!-- /assets/photos/photo-01.jpg -->
+<section class="relative w-full h-[96vh] flex flex-col justify-between p-margin-mobile lg:p-margin overflow-hidden bg-primary text-surface-bright" data-asset="photo-01" id="cover">
+<div class="absolute inset-0 z-0">
+<img alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover scale-110 blur-xl opacity-50" src="assets/photos/WhatsApp%20Image%202026-10-10%20at%2012.35.22%20PM.jpeg"/>
+<img alt="Sumit and Apurvaa holding hands" class="relative z-[1] w-full h-full object-contain filter brightness-[0.88] contrast-[1.04] drop-shadow-[0_18px_60px_rgba(0,0,0,0.35)]" src="assets/photos/WhatsApp%20Image%202026-10-10%20at%2012.35.22%20PM.jpeg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/30 to-primary/50 mix-blend-multiply"></div>
+<div class="absolute inset-0 bg-surface/5 backdrop-blur-[0.5px]"></div>
+</div>
+<!-- Top Cover Metadata -->
+<div class="relative z-10 flex items-center justify-between w-full pt-24 md:pt-24">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] uppercase opacity-90">PRIVATE EDITION 01 / 08</span>
+<span class="w-1.5 h-[1px] bg-surface-bright/60"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest opacity-80">12.10.2026</span>
+</div>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] uppercase opacity-85 hidden sm:inline-block">A LITTLE SOMETHING FOR YOU</span>
+</div>
+<!-- Hero Typography -->
+<div class="relative z-10 flex flex-col gap-space-md max-w-5xl pb-4">
+<div class="flex flex-col">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.32em] text-secondary-fixed opacity-95 uppercase mb-space-xs">CHAPTER 01 • AN EDITORIAL DEDICATION</span>
+<h1 class="font-display-xl text-5xl sm:text-7xl lg:text-display-xl text-surface-bright tracking-tight leading-none drop-shadow-sm font-normal">
+            Apurvaa
+          </h1>
+<p class="font-headline-italic text-2xl sm:text-headline-italic text-secondary-fixed-dim/95 mt-3 font-normal italic">
+            made with a little too much thought.
+          </p>
+</div>
+<div class="flex items-end justify-between pt-space-md border-t border-surface-bright/20">
+<div class="flex flex-col gap-0.5">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.24em] uppercase text-surface-variant/90">12 OCTOBER 2026</span>
+<span class="font-body-sm text-body-sm text-surface-variant/75">Curated by Sumit • Monograph</span>
+</div>
+<a class="flex items-center gap-2 font-label-caps-sub text-label-caps-sub tracking-[0.25em] text-surface-bright bg-surface-container-low/20 backdrop-blur-md px-5 py-2.5 rounded-full hover:bg-surface-bright hover:text-primary transition-all duration-300" data-cursor="SCROLL" href="#beginning">
+<span>SCROLL</span>
+<span class="material-symbols-outlined text-[14px] animate-bounce">arrow_downward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- CHAPTER 02 — THE BEGINNING (PHOTO 02: IMAGE_6) -->
+<!-- /assets/photos/photo-02.jpg -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-surface-container-low" data-asset="photo-02" id="beginning">
+<div class="max-w-6xl mx-auto flex flex-col gap-space-xl">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.35em] text-secondary uppercase font-semibold">CHAPTER 02</span>
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] text-on-surface-variant uppercase">THE BEGINNING</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-center">
+<!-- PHOTO 02 Container -->
+<div class="lg:col-span-6 relative">
+<div class="p-3 sm:p-4 bg-surface rounded-xl shadow-sm border border-outline-variant/30 group">
+<div class="relative aspect-auto overflow-hidden rounded-lg bg-surface-container-high">
+<img alt="Illustrated portrait of a couple in traditional Indian outfits" class="w-full h-auto object-contain" src="assets/photos/WhatsApp%20Image%202026-10-02%20at%2011.40.38%20PM%20%281%29.jpeg"/>
+<div class="absolute bottom-3 left-3 bg-surface/90 backdrop-blur-md px-3 py-1 rounded">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest text-primary uppercase">PHOTO NO. 02 • THE INCEPTION</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Shayari -->
+<div class="lg:col-span-6 flex flex-col justify-center gap-space-lg lg:pl-space-md">
+<div class="flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary/50"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.28em] text-secondary uppercase">KUCHH TUMHARE LIYE</span>
+</div>
+<blockquote class="m-0 flex flex-col gap-space-lg">
+<p class="m-0 font-headline-italic text-2xl sm:text-3xl lg:text-4xl text-primary leading-relaxed italic">
+              Tum saath ho toh har pal khaas lagta hai,<br/>
+              Khamoshiyon mein bhi ek ehsaas lagta hai.
+            </p>
+<p class="m-0 font-display-lg text-3xl sm:text-4xl lg:text-5xl text-secondary font-normal leading-tight">
+              Tasveer toh bas ek bahaana hai,<br/>
+              Asli sukoon toh tumhara saath lagta hai.
+            </p>
+</blockquote>
+<span class="font-headline-italic text-2xl text-secondary" aria-label="with love">♥</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER 03 — THE CHAOS (VIDEO 01 — "THE CHAOS", poster: IMAGE_8) -->
+<!-- /assets/videos/video-01.mp4 -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-primary text-surface-bright" data-asset="video-01" id="chaos">
+<div class="max-w-5xl mx-auto flex flex-col items-center gap-space-lg text-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.35em] text-secondary-fixed uppercase">CHAPTER 03 • CINEMATHEQUE 01</span>
+</div>
+<div class="flex flex-col gap-2 max-w-2xl">
+<h2 class="font-display-lg text-3xl sm:text-display-lg text-surface-bright tracking-tight">
+            Evidence that we are definitely normal.
+          </h2>
+<p class="font-headline-italic text-2xl text-secondary-fixed-dim italic">
+            “Okay... maybe not.”
+          </p>
+</div>
+<!-- Video Player Frame -->
+<div class="video-player-shell w-full relative rounded-2xl overflow-hidden bg-primary-container/80 shadow-2xl border border-surface-bright/15 group">
+<div class="video-frame relative overflow-hidden bg-black/60 flex items-center justify-center">
+<video class="w-full h-full object-contain" id="video-player-1" autoplay="" loop="" muted="" playsinline="" preload="auto">
+<source src="assets/videos/WhatsApp%20Video%202026-10-02%20at%2010.50.31%20PM.mp4" type="video/mp4"/>
+</video>
+<div class="video-shade absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-primary/30 pointer-events-none"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER 04 — THE MEMORIES (PHOTO 03 + PHOTO 04) -->
+<!-- /assets/photos/photo-03.jpg & /assets/photos/photo-04.jpg -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-surface" data-asset="photo-03 photo-04" id="memories">
+<div class="max-w-6xl mx-auto flex flex-col gap-space-xl">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.35em] text-secondary uppercase font-semibold">CHAPTER 04</span>
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] text-on-surface-variant uppercase">THE MEMORIES</span>
+</div>
+<h2 class="font-display-lg text-4xl sm:text-display-lg text-primary tracking-tight">
+            two moments. same people. completely different chaos.
+          </h2>
+</div>
+<!-- Asymmetric Editorial Overlap Layout -->
+<div class="relative grid grid-cols-1 lg:grid-cols-12 gap-y-12 items-center">
+<!-- Large Primary Frame (PHOTO 03: STAIRWELL SELFIE) -->
+<div class="lg:col-span-6 relative z-10">
+<div class="p-3 sm:p-4 bg-surface-container-low rounded-xl shadow-md border border-outline-variant/30">
+<div class="aspect-[1004/1567] overflow-hidden rounded-lg relative group">
+<img alt="Full-length illustrated couple mirror selfie on a stairwell" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]" src="assets/photos/WhatsApp%20Image%202026-10-04%20at%2011.04.21%20PM.jpeg"/>
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<div class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1 rounded">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest text-primary uppercase">PHOTO 03 • STAIRWELL SELFIE</span>
+</div>
+</div>
+<div class="pt-3 px-2 flex justify-between items-center text-on-surface-variant">
+<span class="font-body-sm text-body-sm text-primary italic">“one for the memory book”</span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest uppercase">CAMPUS STAIRWELL</span>
+</div>
+</div>
+</div>
+<!-- Overlapping Offset Secondary Frame (PHOTO 04: IMAGE_4) -->
+<div class="lg:col-span-5 lg:-ml-20 lg:-mt-24 relative z-20">
+<div class="p-3 sm:p-4 bg-surface-container-lowest rounded-xl shadow-xl border border-secondary/20">
+<div class="aspect-[1230/1278] overflow-hidden rounded-lg relative group">
+<img alt="Illustrated elevator mirror selfie together" class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]" src="assets/photos/WhatsApp%20Image%202026-10-04%20at%2011.15.41%20PM.jpeg"/>
+<div class="absolute bottom-3 right-3 bg-primary/80 backdrop-blur-md text-surface-bright px-3 py-1 rounded">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest uppercase">PHOTO 04 • ELEVATOR SELFIE</span>
+</div>
+</div>
+<div class="pt-3 px-2 flex flex-col gap-1">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest text-secondary uppercase font-semibold">ONE MORE MIRROR MEMORY</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  A quick elevator selfie, saved from an ordinary day together.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER 05 — THE RANDOM MOMENTS (VIDEO 02 — "THE RANDOM MOMENT", poster: IMAGE_9) -->
+<!-- /assets/videos/video-02.mp4 -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-surface-container-low" data-asset="video-02" id="random">
+<div class="max-w-5xl mx-auto flex flex-col items-center gap-space-lg text-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.35em] text-secondary uppercase font-semibold">CHAPTER 05 • CINEMATHEQUE 02</span>
+</div>
+<div class="flex flex-col gap-2 max-w-2xl">
+<h2 class="font-display-lg text-3xl sm:text-display-lg text-primary tracking-tight">
+            Some memories were never planned.
+          </h2>
+<p class="font-headline-italic text-2xl text-secondary italic">
+            “Those are usually the best ones.”
+          </p>
+</div>
+<!-- Luxury Video Player Frame -->
+<div class="video-player-shell w-full relative rounded-2xl overflow-hidden bg-surface-container-lowest shadow-xl border border-outline-variant/40 group">
+<div class="video-frame relative overflow-hidden bg-black/80 flex items-center justify-center">
+<video class="w-full h-full object-contain" id="video-player-2" autoplay="" loop="" muted="" playsinline="" preload="auto">
+<source src="assets/videos/WhatsApp%20Video%202026-10-02%20at%2010.50.35%20PM.mp4" type="video/mp4"/>
+</video>
+<div class="video-shade absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER 06 — THE PHOTO STORY (PHOTO 05 + PHOTO 06 + PHOTO 07) -->
+<!-- /assets/photos/photo-05.jpg, photo-06.jpg, photo-07.jpg -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-surface" data-asset="photo-05 photo-06 photo-07" id="photo-story">
+<div class="max-w-6xl mx-auto flex flex-col gap-space-xl">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm border-b border-outline-variant/40 pb-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.35em] text-secondary uppercase font-semibold">CHAPTER 06</span>
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] text-on-surface-variant uppercase">THE PHOTO STORY</span>
+</div>
+<h2 class="font-display-lg text-4xl sm:text-display-lg text-primary tracking-tight">
+              A Continuous Sequence.
+            </h2>
+</div>
+<div class="flex flex-col gap-0.5 md:text-right">
+<span class="font-headline-italic text-lg text-secondary italic">“too many pictures.”</span>
+<span class="font-headline-italic text-lg text-secondary italic">“too many laughs.”</span>
+<span class="font-headline-italic text-lg text-primary font-medium italic">“still not enough memories.”</span>
+</div>
+</div>
+<!-- Continuous Cinematic Sequence Strip -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- PHOTO 05: IMAGE_8 -->
+<div class="flex flex-col gap-space-xs p-3 bg-surface-container-low rounded-xl shadow-sm border border-outline-variant/20 group">
+<div class="aspect-auto overflow-hidden rounded-lg relative bg-surface-container-high">
+<img alt="Illustrated portrait of a couple in sunglasses" class="w-full h-auto object-contain" src="assets/photos/WhatsApp%20Image%202026-10-02%20at%2011.40.38%20PM.jpeg"/>
+<div class="absolute bottom-3 left-3 bg-surface/90 backdrop-blur-md px-2.5 py-1 rounded">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest text-primary uppercase">PHOTO 05 • EXP. 24</span>
+</div>
+</div>
+<div class="pt-2 px-1 flex flex-col gap-1">
+<span class="font-label-caps-sub text-label-caps-sub text-secondary tracking-widest uppercase">PLATE I • THE ILLUSTRATED VERSION</span>
+<p class="font-headline-italic text-lg text-primary italic">“a little imagination.”</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">An everyday memory, reimagined in a playful style.</p>
+</div>
+</div>
+<!-- PHOTO 06: IMAGE_9 -->
+<div class="flex flex-col gap-space-xs p-3 bg-surface-container-low rounded-xl shadow-sm border border-outline-variant/20 group">
+<div class="aspect-auto overflow-hidden rounded-lg relative bg-surface-container-high">
+<img alt="Illustrated close-up couple selfie in a school setting" class="w-full h-auto object-contain" src="assets/photos/WhatsApp%20Image%202026-10-04%20at%2010.53.31%20PM.jpeg"/>
+<div class="absolute bottom-3 left-3 bg-surface/90 backdrop-blur-md px-2.5 py-1 rounded">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest text-primary uppercase">PHOTO 06 • EXP. 25</span>
+</div>
+</div>
+<div class="pt-2 px-1 flex flex-col gap-1">
+<span class="font-label-caps-sub text-label-caps-sub text-secondary tracking-widest uppercase">PLATE II • AFTER CLASS</span>
+<p class="font-headline-italic text-lg text-primary italic">“too many laughs.”</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">A close-up of the two of you, caught mid-conversation.</p>
+</div>
+</div>
+<!-- PHOTO 07: IMAGE_5 (Monochrome / Intimate High-Contrast Crop) -->
+<div class="flex flex-col gap-space-xs p-3 bg-surface-container-low rounded-xl shadow-sm border border-outline-variant/20 group">
+<div class="aspect-auto overflow-hidden rounded-lg relative bg-surface-container-high">
+<img alt="Black-and-white close selfie of the couple outdoors" class="w-full h-auto object-contain grayscale contrast-125" src="assets/photos/WhatsApp%20Image%202026-10-02%20at%2011.40.39%20PM%20%282%29.jpeg"/>
+<div class="absolute bottom-3 left-3 bg-primary text-surface-bright backdrop-blur-md px-2.5 py-1 rounded">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest uppercase">PHOTO 07 • MONOCHROME</span>
+</div>
+</div>
+<div class="pt-2 px-1 flex flex-col gap-1">
+<span class="font-label-caps-sub text-label-caps-sub text-secondary tracking-widest uppercase">PLATE III • ARCHIVE</span>
+<p class="font-headline-italic text-lg text-primary italic">“still not enough memories.”</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The same familiar mischief, kept in black and white.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER 07 — THE ONE (VIDEO 03 — "THE ONE WE'LL LAUGH ABOUT", poster: IMAGE_5) -->
+<!-- /assets/videos/video-03.mp4 -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-inverse-surface text-surface-bright" data-asset="video-03" id="the-one">
+<div class="max-w-5xl mx-auto flex flex-col items-center gap-space-lg text-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.35em] text-secondary-fixed uppercase">CHAPTER 07 • CINEMATHEQUE 03</span>
+</div>
+<div class="flex flex-col gap-2 max-w-xl">
+<h2 class="font-display-lg text-4xl sm:text-display-lg text-surface-bright tracking-tight">
+            Okay, this one...
+          </h2>
+</div>
+<!-- Grand Video Container -->
+<div class="video-player-shell w-full relative rounded-2xl overflow-hidden bg-primary-container/90 shadow-2xl border border-surface-bright/20 group">
+<div class="video-frame relative overflow-hidden bg-black flex items-center justify-center">
+<video class="w-full h-full object-contain" id="video-player-3" autoplay="" loop="" muted="" playsinline="" preload="auto">
+<source src="assets/videos/WhatsApp%20Video%202026-10-04%20at%209.09.41%20PM.mp4" type="video/mp4"/>
+</video>
+<div class="video-shade absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-inverse-surface/40 pointer-events-none"></div>
+</div>
+</div>
+<!-- Epilogue Text Below -->
+<p class="font-headline-italic text-2xl sm:text-headline-italic text-secondary-fixed italic pt-space-xs">
+          “Yeah. Definitely keeping this memory.”
+        </p>
+</div>
+</section>
+<!-- CHAPTER 08 — THE LETTER (NO PHOTO REQUIRED) -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-surface-container-low flex justify-center" id="letter">
+<div class="relative isolate w-full max-w-4xl overflow-hidden bg-surface-container-lowest px-6 py-10 sm:px-12 sm:py-14 lg:px-20 lg:py-20 shadow-sm border border-outline-variant/30 flex flex-col gap-8 sm:gap-10">
+<span class="absolute right-3 top-20 sm:right-8 sm:top-16 text-[96px] sm:text-[128px] leading-none opacity-[0.08] pointer-events-none select-none" aria-hidden="true">🐈‍⬛</span>
+<!-- Letter Header -->
+<div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs pb-space-md border-b border-outline-variant/30">
+<div>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] uppercase text-secondary font-semibold">A BIRTHDAY WISH • JUST FOR YOU</span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest text-outline block mt-1">12 OCTOBER 2026</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-4xl sm:text-5xl leading-none" role="img" aria-label="black cat">🐈‍⬛</span>
+<span class="font-label-caps-sub text-label-caps-sub text-primary uppercase tracking-widest">WITH LOVE</span>
+</div>
+</div>
+<div class="relative z-10 flex flex-col gap-3">
+<h2 class="max-w-3xl font-display-lg text-4xl sm:text-6xl lg:text-7xl leading-tight text-primary">Happiest Birthday Apux! 🎂❤️✨</h2>
+</div>
+<!-- Birthday Wish -->
+<div class="relative z-10 max-w-3xl flex flex-col gap-6 sm:gap-7 font-body-lg text-body-lg text-on-surface-variant leading-relaxed font-light">
+<p class="m-0">Aapki life hamesha khushiyon se bhari rahe, jo bhi aap dil se chahein, woh aapko zaroor mile. 🥹🤍</p>
+<p class="m-0">May you always have the strength to overcome every difficult phase and the courage to keep moving forward. ✨</p>
+<p class="m-0">Life mein chahe kitne bhi ups and downs aayein, bas aapke face ki smile kabhi kam na ho. 🫂❤️</p>
+<p class="m-0">May every silent prayer of yours come true, every dream turn into reality, and every new chapter bring you more happiness, peace and success. 🌸💗</p>
+<div class="mt-2 border-t border-outline-variant/40 pt-6 sm:pt-8">
+<p class="m-0 font-display-lg text-3xl sm:text-4xl leading-snug text-primary">I love you so much, Apux. ❤️🥹</p>
+<p class="m-0 mt-4 font-headline-italic text-2xl sm:text-3xl italic text-secondary">Saarange (사랑해) ❤️✨</p>
+</div>
+</div>
+<!-- Signature -->
+<div class="relative z-10 pt-space-md border-t border-outline-variant/30 flex flex-col gap-1">
+<span class="font-headline-italic text-2xl sm:text-headline-italic text-primary">— Sumit</span>
+<span class="font-label-caps-sub text-label-caps-sub uppercase tracking-[0.25em] text-outline">OCTOBER 12, 2026 • ALWAYS HERE FOR YOU</span>
+</div>
+</div>
+</section>
+<!-- CHAPTER 09 — THE SECRET REVEAL & BIRTHDAY REVEAL -->
+<section class="relative w-full py-space-xl lg:py-36 px-margin-mobile lg:px-margin bg-primary text-surface-bright flex flex-col items-center justify-center overflow-hidden" id="reveal">
+<!-- Glow Gradients -->
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-secondary/30 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute bottom-0 right-1/4 w-80 h-80 bg-primary-container/40 rounded-full blur-2xl pointer-events-none"></div>
+<div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center gap-space-lg">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.35em] uppercase text-secondary-fixed opacity-90">CHAPTER 09 • EPILOGUE &amp; ASCENT</span>
+<!-- The Secret Trigger -->
+<div class="flex flex-col items-center gap-space-sm max-w-lg">
+<p class="font-body-md text-body-md text-surface-variant/80 tracking-wider">
+            there is one more thing.
+          </p>
+<button class="px-8 py-3.5 bg-surface-bright text-primary font-label-uppercase text-label-uppercase tracking-[0.25em] uppercase rounded-full hover:bg-secondary-fixed transition-all duration-300 shadow-xl cursor-pointer" data-cursor="REVEAL" id="secret-btn" type="button" aria-expanded="false" aria-controls="secret-content">
+            OPEN
+          </button>
+</div>
+<!-- Hidden Confession Content -->
+<div class="hidden flex-col items-center gap-space-sm max-w-2xl animate-fadeIn" id="secret-content">
+<div class="w-12 h-[1px] bg-secondary-fixed/40 mb-2"></div>
+<p class="font-headline-italic text-2xl sm:text-headline-italic text-surface-bright italic">
+            “No matter where life takes us…”
+          </p>
+<p class="font-headline-italic text-2xl sm:text-headline-italic text-secondary-fixed italic">
+            “I hope you’ll always have a little place for me in your heart.”
+          </p>
+<p class="font-body-lg text-body-lg text-surface-variant/90 font-light mt-1">
+            And if life gets difficult, remember, someone will always wish the best for you. 🤍
+          </p>
+<div class="mt-space-sm py-2 px-6 bg-primary-container/90 rounded-full border border-secondary-fixed/30">
+<span class="font-display-lg text-headline-sm text-secondary-fixed tracking-widest">Promise? ♡</span>
+</div>
+</div>
+<!-- Grand Birthday Date Typography -->
+<div class="flex flex-col items-center leading-none pt-space-lg mt-space-md border-t border-surface-bright/20 w-full">
+<span class="font-display-xl text-[100px] sm:text-[140px] lg:text-[180px] leading-none text-surface-bright tracking-tighter drop-shadow-md">
+            12
+          </span>
+<span class="font-label-uppercase text-sm sm:text-base tracking-[0.45em] uppercase text-secondary-fixed my-2 font-bold">
+            OCTOBER
+          </span>
+<span class="font-display-lg text-2xl sm:text-3xl text-surface-variant/70 tracking-widest font-light">
+            2026
+          </span>
+<div class="flex flex-col items-center gap-2 pt-space-md">
+<h2 class="font-display-lg text-3xl sm:text-5xl text-surface-bright tracking-tight">
+              HAPPY BIRTHDAY, APURVAA
+            </h2>
+<p class="font-headline-italic text-2xl sm:text-headline-italic text-secondary-fixed italic">
+              “Today is yours.”
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER 10 — THE FINAL PHOTO (PHOTO 08: IMAGE_7) -->
+<!-- /assets/photos/photo-08.jpg -->
+<section class="relative w-full min-h-[96vh] flex flex-col justify-between p-margin-mobile lg:p-margin bg-inverse-surface text-surface-bright overflow-hidden" data-asset="photo-08" id="finale">
+<div class="finale-media absolute inset-0 z-0">
+<img alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover scale-110 blur-xl opacity-50 animate-slow-zoom" src="assets/photos/WhatsApp%20Image%202026-10-02%20at%2011.40.39%20PM%20%281%29.jpeg"/>
+<img alt="Sumit and Apurvaa sharing a playful outdoor selfie" class="finale-photo relative z-[1] w-full h-full object-contain filter brightness-[0.82] contrast-[1.08] drop-shadow-[0_18px_60px_rgba(0,0,0,0.35)]" src="assets/photos/WhatsApp%20Image%202026-10-02%20at%2011.40.39%20PM%20%281%29.jpeg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/45 to-primary/65 mix-blend-multiply"></div>
+<div class="absolute inset-0 bg-surface/5 backdrop-blur-[0.5px]"></div>
+</div>
+<!-- Final Metadata Top -->
+<div class="finale-metadata relative z-10 flex justify-between items-center w-full pt-16 md:pt-4">
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] uppercase text-surface-variant/90">CHAPTER 10 • FINALE</span>
+<span class="font-label-caps-sub text-label-caps-sub tracking-[0.3em] uppercase text-secondary-fixed">SUMIT × APURVAA</span>
+</div>
+<!-- Minimal Poetic Signoff -->
+<div class="finale-copy relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-space-sm py-space-xl">
+<h3 class="font-display-lg text-3xl sm:text-display-lg text-surface-bright tracking-tight leading-tight">
+          Here's to the memories we already have...
+        </h3>
+<p class="font-headline-italic text-2xl sm:text-headline-italic text-secondary-fixed italic font-normal">
+          ...and all the ones we haven't made yet.
+        </p>
+<div class="pt-space-lg flex flex-col items-center gap-2">
+<span class="font-label-uppercase text-label-uppercase tracking-[0.28em] text-surface-variant uppercase font-semibold">Happy Birthday, Apurvaa.</span>
+<span class="font-headline-italic text-2xl text-surface-bright italic">— Sumit</span>
+</div>
+</div>
+<!-- Bottom Archive Code -->
+<div class="finale-catalog relative z-10 flex justify-between items-center w-full text-surface-variant/75 pt-space-md border-t border-surface-bright/20">
+<span class="font-label-caps-sub text-label-caps-sub tracking-widest uppercase">CATALOGUE # 12102026 • 8 PHOTOS &amp; 3 VIDEOS</span>
+<a class="font-label-caps-sub text-label-caps-sub tracking-widest uppercase hover:text-surface-bright flex items-center gap-1 transition-colors" href="#cover">
+<span>RETURN TO BEGINNING</span>
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+</a>
+</div>
+</section>
+</main>
+<!-- Editorial Colophon Footer -->
+<footer class="w-full bg-surface-container-low py-space-xl">
+<div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left">
+<div class="flex flex-col gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-primary">Sumit &amp; For You</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Private Monograph Edition • XII October MMXXVI</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps-sub text-label-caps-sub text-on-surface-variant tracking-widest uppercase">ARCHIVAL ARCHITECTURE</span>
+<span class="font-label-caps-sub text-label-caps-sub text-primary tracking-widest uppercase">EXACT 8 PHOTOS • 3 VIDEOS</span>
+</div>
+</div>
+</footer>
+</div> <!-- /main-site-content -->
+<!-- Scripts: Local Song Player, Secret Reveal & Custom Magnetic Cursor -->
+<audio id="birthday-song" aria-hidden="true" loop preload="auto" src="assets/music/Bairan%20%C3%97%20Barsaat%20Mashup%20%F0%9F%8C%A7%EF%B8%8F%E2%9D%A4%EF%B8%8F%20_%20Banjaare%20_%20Romantic%20Hindi%20Mashup%202026%20%23playlist.mp3"></audio>
+<script>
+    // ── Secret Reveal Interaction ──
+    const secretBtn = document.getElementById('secret-btn');
+    const secretContent = document.getElementById('secret-content');
+    if (secretBtn && secretContent) {
+      secretBtn.addEventListener('click', () => {
+        secretContent.classList.remove('hidden');
+        secretContent.classList.add('flex');
+        secretBtn.classList.add('hidden');
+        secretBtn.setAttribute('aria-expanded', 'true');
+      });
+    }
+
+    // ── Song Player & Welcome Overlay Interaction ──
+    const songToggle = document.getElementById('song-toggle');
+    const soundBars = document.querySelectorAll('.sound-bar');
+    const songIcon = document.getElementById('song-icon');
+    const birthdaySong = document.getElementById('birthday-song');
+    const welcomeOverlay = document.getElementById('welcome-overlay');
+    const mainSiteContent = document.getElementById('main-site-content');
+    let songStarted = false;
+
+    function updateSongButton(isPlaying) {
+      soundBars.forEach(bar => bar.classList.toggle('paused', !isPlaying));
+      if (songIcon) songIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+      if (songToggle) {
+        songToggle.classList.remove('hidden');
+        songToggle.classList.add('flex');
+        songToggle.setAttribute('aria-pressed', String(isPlaying));
+        songToggle.setAttribute('aria-label', isPlaying ? 'Pause our song' : 'Play our song');
+      }
+    }
+
+    function startSongAndDismissOverlay() {
+      if (songStarted) return;
+      songStarted = true;
+
+      // 1. Reveal main website content & enable scroll
+      if (mainSiteContent) {
+        mainSiteContent.style.opacity = '1';
+        mainSiteContent.style.visibility = 'visible';
+        mainSiteContent.style.pointerEvents = 'auto';
+        mainSiteContent.style.transform = 'scale(1)';
+      }
+      document.body.style.overflow = '';
+
+      // 2. Start song audio from beginning
+      birthdaySong.currentTime = 0;
+      birthdaySong.volume = 1;
+      birthdaySong.muted = false;
+      birthdaySong.play().then(() => {
+        updateSongButton(true);
+      }).catch(() => {
+        setTimeout(() => {
+          birthdaySong.play().then(() => updateSongButton(true)).catch(() => {
+            songStarted = false;
+            updateSongButton(false);
+          });
+        }, 100);
+      });
+
+      // 3. Fade out splash overlay smoothly and remove
+      if (welcomeOverlay) {
+        welcomeOverlay.style.opacity = '0';
+        welcomeOverlay.style.transform = 'scale(1.06)';
+        welcomeOverlay.style.pointerEvents = 'none';
+        setTimeout(() => welcomeOverlay.remove(), 900);
+      }
+    }
+
+    // ── Block website & wait strictly for "Open Surprise" user click ──
+    if (welcomeOverlay) {
+      // Keep main body overflow hidden while splash screen is active
+      document.body.style.overflow = 'hidden';
+
+      const surpriseBtn = document.getElementById('open-surprise-btn');
+
+      // Handle click/touch on "Open Surprise" button specifically
+      if (surpriseBtn) {
+        surpriseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          startSongAndDismissOverlay();
+        });
+        surpriseBtn.addEventListener('touchstart', (e) => {
+          e.stopPropagation();
+          startSongAndDismissOverlay();
+        }, { passive: true });
+      }
+
+      // Fallback: click/touch anywhere on overlay
+      welcomeOverlay.addEventListener('click', startSongAndDismissOverlay);
+      welcomeOverlay.addEventListener('touchstart', startSongAndDismissOverlay, { passive: true });
+
+      document.addEventListener('keydown', function overlayKeyHandler(e) {
+        if (!songStarted && (e.key === 'Enter' || e.key === ' ')) {
+          startSongAndDismissOverlay();
+          document.removeEventListener('keydown', overlayKeyHandler);
+        }
+      });
+    }
+
+    // ── Song event listeners ──
+    birthdaySong.addEventListener('playing', () => updateSongButton(true));
+    birthdaySong.addEventListener('pause', () => updateSongButton(false));
+    birthdaySong.addEventListener('ended', () => {
+      // Loop: restart song when it ends
+      birthdaySong.currentTime = 0;
+      birthdaySong.play().catch(() => {});
+    });
+    birthdaySong.addEventListener('error', () => {
+      updateSongButton(false);
+    });
+
+    // Resume song when user returns to tab
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && songStarted && birthdaySong.paused) {
+        birthdaySong.play().catch(() => {});
+      }
+    });
+
+    // Song toggle button (pause/play)
+    if (songToggle) {
+      songToggle.addEventListener('click', () => {
+        if (birthdaySong.paused) {
+          birthdaySong.play().then(() => updateSongButton(true)).catch(() => {});
+        } else {
+          birthdaySong.pause();
+          updateSongButton(false);
+        }
+      });
+    }
+
+    // ── Video players: aspect ratio & autoplay ──
+    document.querySelectorAll('.video-frame video').forEach(video => {
+      const frame = video.parentElement;
+      const setFrameRatio = () => {
+        if (!video.videoWidth || !video.videoHeight) return;
+        const ratio = video.videoWidth / video.videoHeight;
+        frame.style.setProperty('--video-ratio', ratio);
+        frame.dataset.orientation = ratio < 1 ? 'portrait' : 'landscape';
+        const shell = frame.parentElement;
+        shell.style.setProperty('--video-ratio', ratio);
+        shell.dataset.orientation = frame.dataset.orientation;
+      };
+      const startPlayback = () => {
+        setFrameRatio();
+        video.play().catch(() => {});
+      };
+      video.addEventListener('play', () => {
+        frame.classList.add('is-playing');
+      });
+      video.addEventListener('loadedmetadata', startPlayback, { once: true });
+      if (video.videoWidth && video.videoHeight) startPlayback();
+    });
+
+    // ── Magnetic Cursor ──
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    const label = document.getElementById('cursor-label');
+
+    if (dot && ring) {
+      document.addEventListener('mousemove', (e) => {
+        dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+        ring.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+      });
+
+      document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          const text = el.getAttribute('data-cursor') || 'VIEW';
+          if (label) {
+            label.textContent = text;
+            label.classList.remove('opacity-0');
+          }
+          ring.style.width = '60px';
+          ring.style.height = '60px';
+          ring.style.backgroundColor = 'rgba(247, 243, 238, 0.45)';
+          ring.style.backdropFilter = 'blur(4px)';
+        });
+        el.addEventListener('mouseleave', () => {
+          if (label) {
+            label.classList.add('opacity-0');
+          }
+          ring.style.width = '32px';
+          ring.style.height = '32px';
+          ring.style.backgroundColor = 'transparent';
+          ring.style.backdropFilter = 'none';
+        });
+      });
+    }
+  </script>
+</body></html>
